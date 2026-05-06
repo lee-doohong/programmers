@@ -1,2 +1,8 @@
-for i in range(1, 10) :
-    print(i)
+from bisect import * 
+
+
+a = 10**102020
+b = 10**102020
+
+print(a is b)
+print(a == b)
