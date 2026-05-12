@@ -1,8 +1,8 @@
 from bisect import * 
 
 
-a = 10**102020
-b = 10**102020
+arr = [i for i in range(20)]
 
-print(a is b)
-print(a == b)
+print(arr)
+
+print(arr[0:5])
