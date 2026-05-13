@@ -1,8 +1,10 @@
 from bisect import * 
 
+a = [0, 1, 2]
+b = a
+c = a[:]
+a[1] = 10
 
-arr = [i for i in range(20)]
-
-print(arr)
-
-print(arr[0:5])
+print(f"a : {a}")
+print(f"b : {b}")
+print(f"c : {c}")

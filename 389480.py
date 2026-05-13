@@ -1,21 +1,27 @@
 # [[1, 2], [2, 3], [2, 1]],4,4
 # [[1, 2], [2, 3], [2, 1]],1,7
+# [[3, 3], [3, 3]], 7, 1
 
 def solution(info, n, m):
     INF = float('inf')
     #일단 dp배열 생성
     dp = [[INF] * (m + 1) for _ in range(len(info))]
+    target = []
     
     #dp초기화
-    dp[0][0] = info[0][0]
-    dp[0][info[0][1]] = 0
-
-    target = []
-    target.append(0)
-    target.append(info[0][1])
+    #A초기화
+    if info[0][0] < n :
+        dp[0][0] = info[0][0]
+        target.append(0)
+    
+    #B초기화
+    if info[0][1] < m : 
+        dp[0][info[0][1]] = 0
+        target.append(info[0][1])
 
     #dp알고리즘 돌리기, 일단 target에있는거 하나씩 꺼낸다.
     for i in range(1, len(info)) :
+        # print(f"[for] target : {target}")
         nxt_target = []
 
         # A가 훔치는 경우, dp[][] 값 수정, 여기서는 최소값 비교가 의미가 없다. 
@@ -32,7 +38,7 @@ def solution(info, n, m):
                 continue
             else : 
                 dp[i][j + info[i][1]] = min(dp[i - 1][j], dp[i][j + info[i][1]])
-                nxt_target.append(j)
+                nxt_target.append(j + info[i][1])
 
         target = list(set(nxt_target))[:]
 
@@ -43,10 +49,10 @@ def solution(info, n, m):
     if answer == INF :
         answer = -1
 
-    for i in dp :
-        print(i)
+    # for i in dp :
+    #     print(i)
     
     return answer
 
 if __name__ == "__main__" :
-    print(solution([[1, 2], [2, 3], [2, 1]],1 ,7))
+    print(solution([[3, 3], [3, 3]], 7, 1))
